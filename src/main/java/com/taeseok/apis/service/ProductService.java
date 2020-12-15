@@ -21,7 +21,7 @@ public class ProductService {
         return searchedProduct.orElseThrow(() -> new Exception("해당 상품을 찾지 못했습니다"));
     }
 
-    public void initializeProduct(){
+    public void initializeProducts() {
         Product product1 = Product.builder()
                 .name("컴퓨터")
                 .description("여러분들이 쓰고 계신겁니다")
@@ -47,8 +47,5 @@ public class ProductService {
         this.productRepository.save(product2);
         this.productRepository.save(product3);
         this.productRepository.flush();
-    }
-    public void initializeProducts() {
-
     }
 }

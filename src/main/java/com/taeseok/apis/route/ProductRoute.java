@@ -23,7 +23,7 @@ public class ProductRoute {
 
     @GetMapping("/initialize")
     public void initializeProducts(){
-    this.productService.initializeProducts();
+        this.productService.initializeProducts();
     }
 
 }
