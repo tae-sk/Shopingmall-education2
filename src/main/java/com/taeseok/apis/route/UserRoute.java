@@ -2,6 +2,7 @@ package com.taeseok.apis.route;
 
 import com.taeseok.apis.model.User;
 import com.taeseok.apis.service.UserService;
+import com.taeseok.apis.vo.UserRegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +30,18 @@ public class UserRoute {
         return this.userService.find(Integer.parseInt(userId));
     }
 
+    @PostMapping("")
+    public void createUser(UserRegisterVO user){
+        this.userService.createUser(user);
+    }
+
     @GetMapping("/initialize")
     public void initializeUser(){
         this.userService.initializeUsers();
+    }
+
+    @GetMapping("/{user_id}")
+    public void deleteUser(@PathVariable(value="user_id")String userId){
+        this.userService.deleteUser(Integer.parseInt(userId));
     }
 }

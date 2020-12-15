@@ -1,6 +1,7 @@
 package com.taeseok.apis.service;
 
 import com.taeseok.apis.model.User;
+import com.taeseok.apis.vo.UserRegisterVO;
 import com.taeseok.apis.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,16 +28,6 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-//    public void findAll(){
-//        for(User user : this.userRepository.findAll()){
-//            System.out.println(user);
-//        }
-//
-//        User user = this.userRepository.findByName("example@sample.com");
-//        System.out.println(user.getName());
-//    }
-
-
     public void initializeUsers(){
         User user1 = User.builder()
                 .email("example1@sample.com")
@@ -61,5 +52,21 @@ public class UserService {
         this.userRepository.save(user3);
         this.userRepository.flush();
 
+    }
+
+    public void createUser(UserRegisterVO userRegisterVo){
+        User createUser = User.builder()
+                .email(userRegisterVo.getEmail())
+                .phone(userRegisterVo.getPhone())
+                .name(userRegisterVo.getName())
+                .build();
+
+        this.userRepository.save(createUser);
+        this.userRepository.flush();
+
+    }
+
+    public void deleteUser(int userId){
+        this.userRepository.deleteById(userId);
     }
 }
