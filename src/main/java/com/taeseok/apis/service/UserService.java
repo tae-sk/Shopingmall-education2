@@ -5,6 +5,9 @@ import com.taeseok.apis.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 public class UserService {
     private final UserRepository userRepository;
@@ -13,11 +16,26 @@ public class UserService {
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
     }
-    public void findAll(){
-        for(User user : this.userRepository.findAll()){
-            System.out.println(user);
-        }
+    
+    public User find(int userId) throws Exception{
+        Optional<User> searchedUser = this.userRepository.findById(userId);
+//        if(searchedUser == null){
+//            throw new Exception("해당 유저를 찾지 못하였습니다");
+        return searchedUser.orElseThrow(() -> new Exception("해당 유저를 찾지 못하였습니다."));
     }
+    public List<User> findAll(){
+        return this.userRepository.findAll();
+    }
+
+//    public void findAll(){
+//        for(User user : this.userRepository.findAll()){
+//            System.out.println(user);
+//        }
+//
+//        User user = this.userRepository.findByName("example@sample.com");
+//        System.out.println(user.getName());
+//    }
+
 
     public void initializeUsers(){
         User user1 = User.builder()

@@ -1,8 +1,11 @@
 package com.taeseok.apis.route;
 
+import com.taeseok.apis.model.User;
 import com.taeseok.apis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -13,9 +16,17 @@ public class UserRoute {
     public UserRoute(UserService userService){
         this.userService = userService;
     }
+
     @GetMapping("")
-    public void getUsers(){
-        this.userService.findAll();
+    @ResponseBody
+    public List<User> getUsers(){
+        return this.userService.findAll();
+    }
+
+    @GetMapping("/{user_id}")
+    @ResponseBody
+    public User getUsers(@PathVariable(value="user_id") String userId) throws Exception{
+        return this.userService.find(Integer.parseInt(userId));
     }
 
     @GetMapping("/initialize")
