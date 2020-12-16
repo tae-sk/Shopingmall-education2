@@ -30,18 +30,18 @@ public class UserRoute {
         return this.userService.find(Integer.parseInt(userId));
     }
 
-    @PostMapping("")
-    public void createUser(UserRegisterVO user){
-        this.userService.createUser(user);
-    }
-
     @GetMapping("/initialize")
     public void initializeUser(){
         this.userService.initializeUsers();
     }
 
-    @GetMapping("/{user_id}")
+    @DeleteMapping("/{user_id}")
     public void deleteUser(@PathVariable(value="user_id")String userId){
         this.userService.deleteUser(Integer.parseInt(userId));
+    }
+
+    @PostMapping("")
+    public void createUser(UserRegisterVO user){
+        this.userService.createUser(user);
     }
 }
