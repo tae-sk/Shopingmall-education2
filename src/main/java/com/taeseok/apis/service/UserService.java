@@ -24,6 +24,7 @@ public class UserService {
 //            throw new Exception("해당 유저를 찾지 못하였습니다");
         return searchedUser.orElseThrow(() -> new Exception("해당 유저를 찾지 못하였습니다."));
     }
+
     public List<User> findAll(){
         return this.userRepository.findAll();
     }
@@ -54,7 +55,7 @@ public class UserService {
 
     }
 
-    public void createUser(UserRegisterVO userRegisterVo){
+    public int createUser(UserRegisterVO userRegisterVo){
         User createUser = User.builder()
                 .email(userRegisterVo.getEmail())
                 .phone(userRegisterVo.getPhone())
@@ -64,6 +65,7 @@ public class UserService {
         this.userRepository.save(createUser);
         this.userRepository.flush();
 
+        return createUser.getUserId();
     }
 
     public void deleteUser(int userId){

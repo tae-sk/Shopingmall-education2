@@ -29,6 +29,10 @@ public class UserRoute {
     public User getUsers(@PathVariable(value="user_id") String userId) throws Exception{
         return this.userService.find(Integer.parseInt(userId));
     }
+    @PostMapping
+    public int createUser(UserRegisterVO user){
+        return this.userService.createUser(user);
+    }
 
     @GetMapping("/initialize")
     public void initializeUser(){
@@ -40,8 +44,5 @@ public class UserRoute {
         this.userService.deleteUser(Integer.parseInt(userId));
     }
 
-    @PostMapping("")
-    public void createUser(UserRegisterVO user){
-        this.userService.createUser(user);
-    }
+
 }
