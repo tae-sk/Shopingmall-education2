@@ -6,6 +6,7 @@ import com.taeseok.apis.vo.ProductRegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -17,12 +18,17 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public List<Product> findAll(){
+        return this.productRepository.findAll();
+    }
+
     public Product find(int productId) throws Exception{
         Optional<Product> searchedProduct = this.productRepository.findById(productId);
         return searchedProduct.orElseThrow(() -> new Exception("해당 상품을 찾지 못했습니다"));
     }
 
     public void initializeProducts() {
+
         Product product1 = Product.builder()
                 .name("컴퓨터")
                 .description("여러분들이 쓰고 계신겁니다")
