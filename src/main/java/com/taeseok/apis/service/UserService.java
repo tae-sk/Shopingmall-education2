@@ -14,25 +14,24 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    
+
     public User find(int userId) throws Exception{
         Optional<User> searchedUser = this.userRepository.findById(userId);
-//        if(searchedUser == null){
-//            throw new Exception("해당 유저를 찾지 못하였습니다");
-        return searchedUser.orElseThrow(() -> new Exception("해당 유저를 찾지 못하였습니다."));
+        return searchedUser.orElseThrow(() -> new Exception("해당 유저를 찾지 못하였습니다"));
     }
-    public List<User> findAll(){
+
+    public List<User> findAll() {
         return this.userRepository.findAll();
     }
 
-    public void initializeUsers(){
+    public void initializeUsers() {
         User user1 = User.builder()
                 .email("example1@sample.com")
-                .name("Mr. Sample")
-                .phone("01000001234")
+                .name("Mr. Example")
+                .phone("01000000000")
                 .build();
 
         User user2 = User.builder()
@@ -43,30 +42,30 @@ public class UserService {
 
         User user3 = User.builder()
                 .email("example3@sample.com")
-                .name("ms. Sample data")
-                .phone("01000001234")
+                .name("ms. Sample Data")
+                .phone("01012341234")
                 .build();
 
         this.userRepository.save(user1);
         this.userRepository.save(user2);
         this.userRepository.save(user3);
         this.userRepository.flush();
-
     }
 
-    public void createUser(UserRegisterVO userRegisterVo){
+    public int createUser(UserRegisterVO userRegisterVO) {
         User createUser = User.builder()
-                .email(userRegisterVo.getEmail())
-                .phone(userRegisterVo.getPhone())
-                .name(userRegisterVo.getName())
+                .email(userRegisterVO.getEmail())
+                .phone(userRegisterVO.getPhone())
+                .name(userRegisterVO.getName())
                 .build();
 
         this.userRepository.save(createUser);
         this.userRepository.flush();
 
+        return createUser.getUserId();
     }
 
-    public void deleteUser(int userId){
+    public void deleteUser(int userId) {
         this.userRepository.deleteById(userId);
     }
 }
