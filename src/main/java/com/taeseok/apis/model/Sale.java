@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import com.taeseok.apis.datamodels.SaleStatusEnum;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -31,6 +32,7 @@ public class Sale {
     @Column(nullable = false)
     private int amount;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     private SaleStatusEnum status = SaleStatusEnum.NON_PAID;
 
