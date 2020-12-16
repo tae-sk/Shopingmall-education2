@@ -1,8 +1,10 @@
 package com.taeseok.apis.service;
 
+import com.taeseok.apis.datamodels.SaleStatusEnum;
 import com.taeseok.apis.model.Product;
 import com.taeseok.apis.model.Sale;
 import com.taeseok.apis.repository.SaleRepository;
+import com.taeseok.apis.vo.SalePurchaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -20,6 +22,31 @@ public class SaleService {
     @Autowired
     public SaleService(SaleRepository saleRepository){
     this.saleRepository = saleRepository;
+    }
+
+    public int createSale(SalePurchaseVO salePurchaseVO){
+        Sale createdSale = Sale.builder()
+                .userId(salePurchaseVO.getUserId())
+                .productId(salePurchaseVO.getProductId())
+                .paidPrice(salePurchaseVO.getPaidPrice())
+                .listPrice(salePurchaseVO.getListPrice())
+                .amount(salePurchaseVO.getAmount()).build();
+        this.saleRepository.save(createdSale);
+        this.saleRepository.flush();
+
+        return createdSale.getSaleId();
+    }
+
+    public void purchase(int saleId) throws Exception{
+    Optional<Sale> purchaseSale = this.saleRepository.findById(saleId);
+    Sale sale = purchaseSale.orElseThrow(() -> new Exception("결제 완료로 변경하는 도중에 문제가 발생하였습니다!"));
+
+    sale.setStatus(SaleStatusEnum.PAID);
+    this.saleRepository.save(sale);
+    }
+
+    public void refund(int orderId){
+
     }
 
     public void initializeSales(){
