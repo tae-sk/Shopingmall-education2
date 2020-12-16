@@ -6,6 +6,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+enum SaleStatus {
+    NON_PAID,
+    PAID,
+    REFUNDEO
+}
+
 @Getter
 @NoArgsConstructor
 @Entity
@@ -30,6 +36,9 @@ public class Sale {
     @Column(nullable = false)
     private int amount;
 
+    @Enumerated(EnumType.STRING)
+    private SaleStatus status = SaleStatus.NON_PAID;
+
     @Builder
     public Sale(int saleId, int userId, int productId, int paidPrice, int listPrice, int amount){
         this.saleId = saleId;
@@ -38,6 +47,7 @@ public class Sale {
         this.paidPrice = paidPrice;
         this.listPrice = listPrice;
         this.amount = amount;
+        this.status = status;
     }
 
     @Override
