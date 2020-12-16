@@ -43,9 +43,16 @@ public class SaleService {
 
     sale.setStatus(SaleStatusEnum.PAID);
     this.saleRepository.save(sale);
+    this.saleRepository.flush();
     }
 
-    public void refund(int orderId){
+    public void refund(int saleId) throws Exception{
+        Optional<Sale> targetSale = this.saleRepository.findById(saleId);
+        Sale sale = targetSale.orElseThrow(() -> new Exception("결제 취소로 변경하는 도중에 문제가 발생하였습니다!"));
+
+        sale.setStatus(SaleStatusEnum.REFUNDEO);
+        this.saleRepository.save(sale);
+        this.saleRepository.flush();
 
     }
 
