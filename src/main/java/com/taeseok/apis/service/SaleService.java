@@ -3,7 +3,10 @@ package com.taeseok.apis.service;
 import com.taeseok.apis.datamodels.SaleStatusEnum;
 import com.taeseok.apis.model.Product;
 import com.taeseok.apis.model.Sale;
+import com.taeseok.apis.model.User;
+import com.taeseok.apis.repository.ProductRepository;
 import com.taeseok.apis.repository.SaleRepository;
+import com.taeseok.apis.repository.UserRepository;
 import com.taeseok.apis.vo.SalePurchaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,18 +16,36 @@ import java.util.Optional;
 @Controller
 public class SaleService {
     private final SaleRepository saleRepository;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
 
+    @Autowired
+    public SaleService(SaleRepository saleRepository,
+                       UserRepository userRepository,
+                       ProductRepository productRepository){
+    this.saleRepository = saleRepository;
+    this.userRepository = userRepository;
+    this.productRepository = productRepository;
+    }
     public Sale find(int saleId) throws Exception{
         Optional<Sale> searchedSale = this.saleRepository.findById(saleId);
         return searchedSale.orElseThrow(() -> new Exception("해당 상품을 찾지 못했습니다"));
     }
 
-    @Autowired
-    public SaleService(SaleRepository saleRepository){
-    this.saleRepository = saleRepository;
-    }
+    public int createSale(SalePurchaseVO salePurchaseVO) throws  Exception {
+        Optional<Product> product = this.productRepository.findById(salePurchaseVO.getProductId()) ;
+        Optional<User> user = this.userRepository.findById(salePurchaseVO.getUserId());
 
-    public int createSale(SalePurchaseVO salePurchaseVO){
+        Product findedProduct = product.orElseThrow(() -> new Exception("해당 상품 ID가 존재하지 않습니다."));
+        user.orElseThrow(() -> new Exception("해당 유저 ID가 존재하지 않습니다."));
+
+        if(salePurchaseVO.getListPrice() != findedProduct.getListPrice() * salePurchaseVO.getAmount()) {
+            throw new Exception("정가가 상품정보에 등록된 가격과 다릅니다.");
+        }
+        if (salePurchaseVO.getPaidPrice() != findedProduct.getPrice() * salePurchaseVO.getAmount()){
+            throw new Exception("실제 구매 금액이 상품정보에 등록된 가격과 다릅니다.");
+        }
+
         Sale createdSale = Sale.builder()
                 .userId(salePurchaseVO.getUserId())
                 .productId(salePurchaseVO.getProductId())
