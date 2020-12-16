@@ -1,6 +1,8 @@
 package com.taeseok.apis.service;
 
+import com.taeseok.apis.datamodels.SaleGroupByUserId;
 import com.taeseok.apis.datamodels.SaleStatusEnum;
+import com.taeseok.apis.datamodels.UserTotalPaidPrice;
 import com.taeseok.apis.model.Product;
 import com.taeseok.apis.model.Sale;
 import com.taeseok.apis.model.User;
@@ -109,5 +111,9 @@ public class SaleService {
 
     public List<Sale> getSalesByUserId(int userId){
         return this.saleRepository.findByUserId(userId);
+    }
+    public UserTotalPaidPrice getTotalPaidPriceByUserId(int userId){
+        SaleGroupByUserId groupData = this.saleRepository.PurchaseAmountGroupByUserId(userId);
+        return new UserTotalPaidPrice(groupData);
     }
 }

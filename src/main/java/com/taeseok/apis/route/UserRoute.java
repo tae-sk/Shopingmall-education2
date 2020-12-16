@@ -1,5 +1,7 @@
 package com.taeseok.apis.route;
 
+import com.taeseok.apis.datamodels.UserGradeEnum;
+import com.taeseok.apis.datamodels.UserTotalPaidPrice;
 import com.taeseok.apis.model.Sale;
 import com.taeseok.apis.model.User;
 import com.taeseok.apis.service.SaleService;
@@ -52,5 +54,16 @@ public class UserRoute {
     @GetMapping("/{user_id}/purchase_list")
     public List<Sale> userPurchaseList(@PathVariable(value = "user_id") String userId){
         return this.saleService.getSalesByUserId(Integer.parseInt(userId));
+    }
+
+    @GetMapping("/{user_id}/purchase_amount")
+    public UserTotalPaidPrice userTotalPaidPrice(@PathVariable(value = "user_id") String userId){
+        return this.saleService.getTotalPaidPriceByUserId(Integer.parseInt(userId));
+    }
+
+    @GetMapping("/{user_id}/grade")
+    @ResponseBody
+    public UserGradeEnum getUserGrade(@PathVariable(value = "user_id") String userId){
+        return this.userService.getUserGrade(Integer.parseInt(userId));
     }
 }
