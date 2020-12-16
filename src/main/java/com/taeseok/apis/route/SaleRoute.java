@@ -2,6 +2,7 @@ package com.taeseok.apis.route;
 
 import com.taeseok.apis.model.Sale;
 import com.taeseok.apis.service.SaleService;
+import com.taeseok.apis.vo.SalePurchaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,5 +24,10 @@ public class SaleRoute {
     @GetMapping("/initialize")
     public void initializeSales(){
         this.saleService.initializeSales();
+    }
+
+    @PostMapping("/purchase")
+    public void purchase(SalePurchaseVO salePurchaseVO){
+        this.saleService.purchase(salePurchaseVO);
     }
 }
