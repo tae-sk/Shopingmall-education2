@@ -11,6 +11,7 @@ import com.taeseok.apis.vo.SalePurchaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -104,5 +105,9 @@ public class SaleService {
         this.saleRepository.save(sale2);
         this.saleRepository.save(sale3);
         this.saleRepository.flush();
+    }
+
+    public List<Sale> getSalesByUserId(int userId){
+        return this.saleRepository.findByUserId(userId);
     }
 }

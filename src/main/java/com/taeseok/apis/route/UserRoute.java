@@ -1,6 +1,8 @@
 package com.taeseok.apis.route;
 
+import com.taeseok.apis.model.Sale;
 import com.taeseok.apis.model.User;
+import com.taeseok.apis.service.SaleService;
 import com.taeseok.apis.service.UserService;
 import com.taeseok.apis.vo.UserRegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserRoute {
     private final UserService userService;
+    private final SaleService saleService;
 
     @Autowired
-    public UserRoute(UserService userService){
+    public UserRoute(UserService userService, SaleService saleService){
         this.userService = userService;
+        this.saleService = saleService;
     }
 
     @GetMapping("")
@@ -43,5 +47,10 @@ public class UserRoute {
     @PostMapping("")
     public void createUser(UserRegisterVO user){
         this.userService.createUser(user);
+    }
+
+    @GetMapping("/{user_id}/purchase_list")
+    public List<Sale> userPurchaseList(@PathVariable(value = "user_id") String userId){
+        return this.saleService.getSalesByUserId(Integer.parseInt(userId));
     }
 }
