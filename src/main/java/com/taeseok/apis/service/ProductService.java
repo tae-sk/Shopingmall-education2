@@ -2,6 +2,7 @@ package com.taeseok.apis.service;
 
 import com.taeseok.apis.model.Product;
 import com.taeseok.apis.repository.ProductRepository;
+import com.taeseok.apis.vo.ProductRegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -47,5 +48,20 @@ public class ProductService {
         this.productRepository.save(product2);
         this.productRepository.save(product3);
         this.productRepository.flush();
+    }
+
+    public void createProduct(ProductRegisterVO productRegisterVO){
+        Product createdProduct = Product.builder()
+                .name(productRegisterVO.getName())
+                .description(productRegisterVO.getDescription())
+                .listPrice(productRegisterVO.getListPrice())
+                .Price(productRegisterVO.getPrice())
+                .build();
+    this.productRepository.save(createdProduct);
+    this.productRepository.flush();
+    }
+
+    public void deleteProducts(int productId){
+        this.productRepository.deleteById(productId);
     }
 }

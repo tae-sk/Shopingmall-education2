@@ -2,6 +2,7 @@ package com.taeseok.apis.route;
 
 import com.taeseok.apis.model.Product;
 import com.taeseok.apis.service.ProductService;
+import com.taeseok.apis.vo.ProductRegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +27,14 @@ public class ProductRoute {
         this.productService.initializeProducts();
     }
 
+    @DeleteMapping("/{product_id")
+    public void deleteProduct(@PathVariable(value="product_id") String productId) throws Exception{
+        this.productService.deleteProducts(Integer.parseInt(productId));
+    }
+
+    @PostMapping
+    public void createProduct(ProductRegisterVO product){
+        this.productService.createProduct(product);
+    }
 }
 
