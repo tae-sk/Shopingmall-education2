@@ -3,14 +3,9 @@ package com.taeseok.apis.model;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import com.taeseok.apis.datamodels.SaleStatusEnum;
 
 import javax.persistence.*;
-
-enum SaleStatus {
-    NON_PAID,
-    PAID,
-    REFUNDEO
-}
 
 @Getter
 @NoArgsConstructor
@@ -37,7 +32,7 @@ public class Sale {
     private int amount;
 
     @Enumerated(EnumType.STRING)
-    private SaleStatus status = SaleStatus.NON_PAID;
+    private SaleStatusEnum status = SaleStatusEnum.NON_PAID;
 
     @Builder
     public Sale(int saleId, int userId, int productId, int paidPrice, int listPrice, int amount){
