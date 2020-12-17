@@ -23,18 +23,20 @@ public class Product {
 
     @Column
     private int listPrice;
+
     @Column
     private int Price;
 
-    @Column(length = 12)
-    private String phone;
+    @Column(length = 40)
+    private String category;
 
     @Builder
-    public Product(String name, String description,int listPrice, int Price){
+    public Product(String name, String description,int listPrice,int Price, String category){
         this.name = name;
         this.description = description;
         this.listPrice = listPrice;
         this.Price = Price;
+        this.category = category;
     }
 
     @Override
