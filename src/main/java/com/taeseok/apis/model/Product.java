@@ -30,13 +30,17 @@ public class Product {
     @Column(length = 40)
     private String category;
 
+    @Column
+    private String imgUrl;
+
     @Builder
-    public Product(String name, String description,int listPrice,int Price, String category){
+    public Product(String name, String description,int listPrice,int Price, String category, String imgUrl){
         this.name = name;
         this.description = description;
         this.listPrice = listPrice;
         this.Price = Price;
         this.category = category;
+        this.imgUrl = imgUrl;
     }
 
     @Override
