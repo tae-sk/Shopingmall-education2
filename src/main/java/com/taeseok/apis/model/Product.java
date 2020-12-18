@@ -34,7 +34,7 @@ public class Product {
 
     @OneToMany
     @JoinColumn(name="product_id")
-    private Collection<Review> review = new ArrayList<>;
+    private Collection<Review> review = new ArrayList<>();
 
     @Column
     private String imgUrl;
@@ -46,7 +46,6 @@ public class Product {
         this.listPrice = listPrice;
         this.Price = Price;
         this.category = category;
-        this.imgUrl = imgUrl;
     }
 
     @Override
