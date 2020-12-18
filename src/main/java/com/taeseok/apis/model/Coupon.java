@@ -35,7 +35,7 @@ public class Coupon {
 
     @Builder
     public Coupon(Date expireAt, int availableDays, int productID,
-                  String category, int discountPrice, int discountPercentage){
+                  String category, int discountPrice, int discountPercentage) {
         this.expireAt = expireAt;
         this.availableDays = availableDays;
         this.productID = productID;
@@ -45,12 +45,12 @@ public class Coupon {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format(
-            "Coupon[couponId=%d, expireAt='%s', availableDays=%d, productId=%d, category='%s' "+
-                    "discountPrice=%d, discountPercentage=%d]",
-                this.couponId, this.expireAt, this.availableDays,this.productID,this.discountPrice,
+                "Coupon[couponId=%d, expireAt='%s', availableDays=%d, productID=%d, category='%s', " +
+                        "discountPrice=%d, discountPercentage=%d]",
+                this.couponId, this.expireAt, this.availableDays, this.productID, this.category, this.discountPrice,
                 this.discountPercentage
-                );
+        );
     }
 }

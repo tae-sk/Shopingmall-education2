@@ -23,11 +23,6 @@ public class ProductRoute {
     public Product getProduct(@PathVariable(value="product_id") String productId) throws Exception {
         return this.productService.find(Integer.parseInt(productId));
     }
-    @GetMapping
-    @ResponseBody
-    public List<Product> getProducts(){
-        return this.productService.findAll();
-    }
 
     @GetMapping
     @ResponseBody
@@ -52,7 +47,7 @@ public class ProductRoute {
 
     @GetMapping("/category/{category_name}")
     @ResponseBody
-    public List<Product> getProductsByCategory(@PathVariable(value = "category_name") String category_name){
+    public List<Product> getProductsByCategory(@PathVariable(value="category_name") String category_name) {
         return this.productService.productsByCategory(category_name);
     }
 }

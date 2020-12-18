@@ -31,9 +31,10 @@ public class CouponRegisterVO {
     @Override
     public String toString() {
         return String.format(
-                "CouponRegisterVO[expireAt='%s', availableDays=%d, productId=%d, category='%s' " +
+                "CouponRegisterVO[expireAt='%s', availableDays=%d, productID=%d, category='%s', " +
                         "discountPrice=%d, discountPercentage=%d]",
-                this.expireAt, this.availableDays, this.productID, this.discountPrice, this.discountPercentage
+                this.expireAt, this.availableDays, this.productID, this.category, this.discountPrice,
+                this.discountPercentage
         );
     }
 }

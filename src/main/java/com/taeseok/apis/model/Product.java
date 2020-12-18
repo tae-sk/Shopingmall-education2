@@ -11,13 +11,12 @@ import java.util.Collection;
 @Getter
 @NoArgsConstructor
 @Entity
-
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
 
-    @Column(length  = 80, nullable = false)
+    @Column(length = 80, nullable = false)
     private String name;
 
     @Column
@@ -27,7 +26,8 @@ public class Product {
     private int listPrice;
 
     @Column
-    private int Price;
+    private int price;
+
     @Column(length = 40)
     private String category;
 
@@ -36,23 +36,22 @@ public class Product {
     private Collection<Review> review = new ArrayList<>();
 
     @Column
-    private String imgUrl;
+    private String imageURL;
 
     @Builder
-    public Product(String name, String description,int listPrice,int Price, String category, String imgUrl){
+    public Product(String name, String description, int listPrice, int price, String category, String imageURL) {
         this.name = name;
         this.description = description;
         this.listPrice = listPrice;
-        this.Price = Price;
+        this.price = price;
         this.category = category;
-        this.imgUrl = imgUrl;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "User[productId='%s', name='%s', description='%s', listPrice=%d Price=%d]",
-                this.productId, this.name, this.description, this.listPrice, this.Price
+                "Product[productId='%s', name='%s', description='%s', listPrice=%d, price=%d, category='%s', imageURL='%s']",
+                this.productId, this.name, this.description, this.listPrice, this.price, this.category, this.imageURL
         );
     }
 }

@@ -17,16 +17,17 @@ public class IssuedCouponService {
     private final CouponRepository couponRepository;
 
     @Autowired
-    public IssuedCouponService(IssuedCouponRepository issuedCouponRepository, CouponRepository couponRepository){
+    public IssuedCouponService(IssuedCouponRepository issuedCouponRepository, CouponRepository couponRepository) {
         this.issuedCouponRepository = issuedCouponRepository;
         this.couponRepository = couponRepository;
     }
-    public IssuedCoupon issueCouponById(int issueCouponId) throws Exception{
+
+    public IssuedCoupon issueCouponById(int issueCouponId) throws Exception {
         return this.issuedCouponRepository.findById(issueCouponId)
-                .orElseThrow(() -> new Exception("해당 발급된 쿠폰 ID가 없습니다."));
+                .orElseThrow(() -> new Exception("해당 발급된 쿠폰 ID가 없습니다"));
     }
 
-    public int issueCoupon(int couponId, int userId) throws Exception{
+    public int issueCoupon(int couponId, int userId) throws Exception {
         Optional<Coupon> SearchedCoupon = this.couponRepository.findById(couponId);
         Coupon coupon = SearchedCoupon.orElseThrow(() -> new Exception("해당 쿠폰을 찾지 못하였습니다."));
 
@@ -34,15 +35,16 @@ public class IssuedCouponService {
         Date addedDate = DateUtil.addDays(new Date(), coupon.getAvailableDays());
 
         int compareDate = addedDate.compareTo(coupon.getExpireAt());
-        if(compareDate == 1){
+        if (compareDate == 1) {
             expireDate = coupon.getExpireAt();
         }
-        else if(compareDate == -1){
+        else if (compareDate == -1){
             expireDate = addedDate;
         }
         else {
             expireDate = addedDate;
         }
+
         IssuedCoupon issuedCoupon = IssuedCoupon.builder()
                 .couponId(couponId)
                 .expiredAt(expireDate)
@@ -54,4 +56,5 @@ public class IssuedCouponService {
 
         return issuedCoupon.getIssuedCouponId();
     }
+
 }

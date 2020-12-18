@@ -28,18 +28,17 @@ public class IssuedCoupon {
     boolean used = false;
 
     @Builder
-    public IssuedCoupon(int couponId, int userId, Date expiredAt){
+    public IssuedCoupon(int couponId, int userId, Date expiredAt) {
         this.couponId = couponId;
         this.userId = userId;
         this.expiredAt = expiredAt;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format(
-                "IssuedCoupon[issueCouponId=%d, couponId=%d, userId=%d, expiredAt='%s' "+
-                        "used='%s']",
-                this.issuedCouponId, this.couponId, this.userId,this.expiredAt,this.used
+                "IssuedCoupon[issueCouponId=%d, couponId=%d, userId=%d, expiredAt='%s', used='%s']",
+                this.issuedCouponId, this.couponId, this.userId, this.expiredAt, this.used
         );
     }
 }

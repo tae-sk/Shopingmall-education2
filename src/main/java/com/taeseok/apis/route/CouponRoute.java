@@ -18,15 +18,15 @@ public class CouponRoute {
     private final IssuedCouponService issuedCouponService;
 
     @Autowired
-    public CouponRoute(CouponService couponService,
-                        IssuedCouponService issuedCouponService){
+    public CouponRoute(CouponService couponService, IssuedCouponService issuedCouponService) {
         this.couponService = couponService;
         this.issuedCouponService = issuedCouponService;
     }
 
-    @GetMapping("/{coupon_id")
+
+    @GetMapping("/{coupon_id}")
     @ResponseBody
-    public Coupon getCoupon(@PathVariable(value = "coupon_id") String couponId) throws Exception{
+    public Coupon getCoupon(@PathVariable(value="coupon_id") String couponId) throws Exception {
         return this.couponService.couponById(Integer.parseInt(couponId));
     }
 
@@ -36,13 +36,14 @@ public class CouponRoute {
     }
 
     @PostMapping("/{coupon_id}/issue")
-    public int issueCoupon(@PathVariable(value = "coupon_id") String couponId,
-                           @RequestParam(value = "user_id") String userId) throws Exception{
-        return this.issuedCouponService.issueCoupon(Integer.parseInt(couponId),Integer.parseInt(userId));
+    public int issueCoupon(@PathVariable(value="coupon_id") String couponId,
+                           @RequestParam(value="user_id") String userId) throws Exception {
+        return this.issuedCouponService.issueCoupon(Integer.parseInt(couponId), Integer.parseInt(userId));
     }
 
     @GetMapping("/issued-coupon/{issued_coupon_id}")
-    public IssuedCoupon getIssuedCoupon(@PathVariable(value ="issued_coupon_id") String issuedCouponId)throws Exception{
+    @ResponseBody
+    public IssuedCoupon getIssuedCoupon(@PathVariable(value="issued_coupon_id") String issuedCouponId) throws Exception{
         return this.issuedCouponService.issueCouponById(Integer.parseInt(issuedCouponId));
     }
 }

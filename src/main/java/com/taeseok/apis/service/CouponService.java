@@ -14,20 +14,20 @@ public class CouponService {
     private final CouponRepository couponRepository;
 
     @Autowired
-    public CouponService(CouponRepository couponRepository){
+    public CouponService(CouponRepository couponRepository) {
         this.couponRepository = couponRepository;
     }
 
-    public int createCoupon(CouponRegisterVO couponRegisterVO) throws Exception{
-        if(couponRegisterVO.getDiscountPercentage() != 0 && couponRegisterVO.getDiscountPercentage() != 0){
-            throw new Exception("할인 금액과 할인 비율이 동시에 존재 할 수 없습니다!");
+    public int createCoupon(CouponRegisterVO couponRegisterVO) throws Exception {
+        if (couponRegisterVO.getDiscountPercentage() != 0 && couponRegisterVO.getDiscountPrice() != 0) {
+            throw new Exception("할인 금액과 할인 비율이 동시에 존재할수 없습니다!");
         }
 
         Coupon createdCoupon = Coupon.builder()
                 .availableDays(couponRegisterVO.getAvailableDays())
                 .category(couponRegisterVO.getCategory())
                 .discountPercentage(couponRegisterVO.getDiscountPercentage())
-                .discountPrice(couponRegisterVO.getDiscountPercentage())
+                .discountPrice(couponRegisterVO.getDiscountPrice())
                 .expireAt(couponRegisterVO.getExpireAt())
                 .productID(couponRegisterVO.getProductID())
                 .build();
@@ -38,10 +38,9 @@ public class CouponService {
         return createdCoupon.getCouponId();
     }
 
-    public Coupon couponById(int couponId) throws Exception{
+    public Coupon couponById(int couponId) throws Exception {
         Optional<Coupon> coupon = this.couponRepository.findById(couponId);
 
-        return coupon.orElseThrow(() -> new Exception("해당 쿠폰을 사용할 수 없습니다."));
+        return coupon.orElseThrow(() -> new Exception("해당 쿠폰을 확인할수 없습니다"));
     }
-
 }
