@@ -34,6 +34,7 @@ public class ProductService {
                 .listPrice(1200000)
                 .Price(1000000)
                 .category("전자기기")
+                .imgUrl("")
                 .build();
 
         Product product2 = Product.builder()
@@ -42,6 +43,7 @@ public class ProductService {
                 .listPrice(1240000)
                 .Price(1110000)
                 .category("전자기기")
+                .imgUrl("")
                 .build();
 
         Product product3 = Product.builder()
@@ -50,6 +52,7 @@ public class ProductService {
                 .listPrice(230000)
                 .Price(210000)
                 .category("전자기기")
+                .imgUrl("")
                 .build();
 
         this.productRepository.save(product1);
@@ -65,6 +68,7 @@ public class ProductService {
                 .listPrice(productRegisterVO.getListPrice())
                 .Price(productRegisterVO.getPrice())
                 .category(productRegisterVO.getCategory())
+                .imgUrl(productRegisterVO.getImgUrl())
                 .build();
 
         this.productRepository.save(createdProduct);
