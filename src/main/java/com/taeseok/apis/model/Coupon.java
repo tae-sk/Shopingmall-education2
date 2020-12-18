@@ -18,7 +18,10 @@ public class Coupon {
     Date expireAt;
 
     @Column
-    String productId;
+    int availableDays;
+
+    @Column
+    String productID;
 
     @Column
     String category;
@@ -27,4 +30,5 @@ public class Coupon {
     int discountPrice = 0;
 
     @Column
+    int intdiscountPercentage = 0;
 }
