@@ -1,8 +1,10 @@
 package com.taeseok.apis.vo;
 
+import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import java.util.Date;
@@ -11,11 +13,19 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 public class CouponRegisterVO {
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date expireAt;
+
     int availableDays;
+
+    @Nullable
     int productID;
+
+    @Nullable
     String category;
+
     int discountPrice = 0;
+
     int discountPercentage = 0;
 
     @Override
