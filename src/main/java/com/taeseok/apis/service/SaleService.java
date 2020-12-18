@@ -50,6 +50,17 @@ public class SaleService {
             throw new Exception("실제 구매 금액이 상품정보에 등록된 가격과 다릅니다");
         }
 
+        int issuedCouponId = salePurchaseVO.getIssuedCouponId();
+        IssuedCoupon issuedCoupon = this.issuedCouponRepository.findById(issuedCouponId)
+                .orElseThrow(() -> new Exception("해당 발급된 쿠폰이 존재하지 않습니다."));
+
+        Coupon coupon = this.couponRepository.findById(issuedCoupon.getCouponId())
+                .orElseThrow(() -> new Exception("해당 쿠폰이 존재하지 않습니다."));
+
+        int discountAmount = this.getDiscountAmount(salePurchaseVO.getPaidPrice(),
+                                                    coupon.getDiscountPrice(),
+                                                    coupon.getDiscountPercentage());
+
         Sale createdSale = Sale.builder()
                 .userId(salePurchaseVO.getUserId())
                 .productId(salePurchaseVO.getProductId())
