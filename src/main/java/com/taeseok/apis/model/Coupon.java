@@ -1,5 +1,6 @@
 package com.taeseok.apis.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,5 +31,26 @@ public class Coupon {
     int discountPrice = 0;
 
     @Column
-    int intdiscountPercentage = 0;
+    int discountPercentage = 0;
+
+    @Builder
+    public Coupon(Date expireAt, int availableDays, String productID,
+                  String category, int discountPrice, int discountPercentage){
+        this.expireAt = expireAt;
+        this.availableDays = availableDays;
+        this.productID = productID;
+        this.category = category;
+        this.discountPrice = discountPrice;
+        this.discountPercentage = discountPercentage;
+    }
+
+    @Override
+    public String toString(){
+        return String.format(
+            "Coupon[couponId=%d, expireAt='%s', availableDays=%d, productId=%d, category='%s' "+
+                    "discountPrice=%d, discountPercentage=%d]",
+                this.couponId, this.expireAt, this.availableDays,this.productID,this.discountPrice,
+                this.discountPercentage
+                );
+    }
 }
