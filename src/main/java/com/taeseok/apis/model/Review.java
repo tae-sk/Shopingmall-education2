@@ -16,9 +16,6 @@ public class Review {
     private int reviewId;
 
     @Column
-    private int productId;
-
-    @Column
     private int userId;
 
     @Column
@@ -28,18 +25,17 @@ public class Review {
     private String review;
 
     @Builder
-    public Review(int productId, int userId, int rate, String review){
-        this.productId = productId;
+    public Review(int userId, int rate, String review) {
         this.userId = userId;
         this.rate = rate;
         this.review = review;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format(
-                "Review[reviewId=%d, productId=%d,userId=%d,rate=%d,review='%s']",
-                this.reviewId, this.productId, this.userId,this.rate,this.review
+                "Review[reviewId=%d, userId=%d, rate=%d, review='%s']",
+                this.reviewId, this.userId, this.rate, this.review
         );
     }
 }
