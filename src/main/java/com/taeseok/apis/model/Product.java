@@ -28,7 +28,6 @@ public class Product {
 
     @Column
     private int Price;
-
     @Column(length = 40)
     private String category;
 
