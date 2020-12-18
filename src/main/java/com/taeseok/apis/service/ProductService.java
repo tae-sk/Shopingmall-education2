@@ -6,7 +6,6 @@ import com.taeseok.apis.vo.ProductRegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -14,17 +13,13 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository){
         this.productRepository = productRepository;
     }
 
-    public List<Product> findAll() {
-        return this.productRepository.findAll();
-    }
-
-    public Product find(int productId) throws Exception {
+    public Product find(int productId) throws Exception{
         Optional<Product> searchedProduct = this.productRepository.findById(productId);
-        return searchedProduct.orElseThrow(() -> new Exception("해당 상품을 찾지 못하였습니다"));
+        return searchedProduct.orElseThrow(() -> new Exception("해당 상품을 찾지 못했습니다"));
     }
 
     public void initializeProducts() {
@@ -33,8 +28,6 @@ public class ProductService {
                 .description("여러분들이 쓰고 계신겁니다")
                 .listPrice(1200000)
                 .Price(1000000)
-                .category("전자기기")
-                .imgUrl("")
                 .build();
 
         Product product2 = Product.builder()
@@ -42,8 +35,6 @@ public class ProductService {
                 .description("핸드폰입니다")
                 .listPrice(1240000)
                 .Price(1110000)
-                .category("전자기기")
-                .imgUrl("")
                 .build();
 
         Product product3 = Product.builder()
@@ -51,8 +42,6 @@ public class ProductService {
                 .description("달라진 것은 하나, 전부입니다")
                 .listPrice(230000)
                 .Price(210000)
-                .category("전자기기")
-                .imgUrl("")
                 .build();
 
         this.productRepository.save(product1);
@@ -61,27 +50,18 @@ public class ProductService {
         this.productRepository.flush();
     }
 
-    public int createProduct(ProductRegisterVO productRegisterVO) {
+    public void createProduct(ProductRegisterVO productRegisterVO){
         Product createdProduct = Product.builder()
                 .name(productRegisterVO.getName())
                 .description(productRegisterVO.getDescription())
                 .listPrice(productRegisterVO.getListPrice())
                 .Price(productRegisterVO.getPrice())
-                .category(productRegisterVO.getCategory())
-                .imgUrl(productRegisterVO.getImgUrl())
                 .build();
-
-        this.productRepository.save(createdProduct);
-        this.productRepository.flush();
-
-        return createdProduct.getProductId();
+    this.productRepository.save(createdProduct);
+    this.productRepository.flush();
     }
 
-    public void deleteProduct(int productId) {
+    public void deleteProducts(int productId){
         this.productRepository.deleteById(productId);
-    }
-
-    public List<Product> productsByCategory(String category){
-        return this.productRepository.findByCategory(category);
     }
 }

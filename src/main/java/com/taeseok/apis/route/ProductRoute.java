@@ -23,6 +23,11 @@ public class ProductRoute {
     public Product getProduct(@PathVariable(value="product_id") String productId) throws Exception {
         return this.productService.find(Integer.parseInt(productId));
     }
+    @GetMapping
+    @ResponseBody
+    public List<Product> getProducts(){
+        return this.productService.findAll();
+    }
 
     @GetMapping
     @ResponseBody
