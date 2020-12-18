@@ -1,4 +1,4 @@
-package com.taeseok.apis.util.;
+package com.taeseok.apis.util;
 
 import java.util.Calendar;
 import java.util.Date;
