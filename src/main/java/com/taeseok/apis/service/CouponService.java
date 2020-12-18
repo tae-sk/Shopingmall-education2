@@ -41,7 +41,7 @@ public class CouponService {
     public Coupon couponById(int couponId) throws Exception{
         Optional<Coupon> coupon = this.couponRepository.findById(couponId);
 
-        return coupon.orElseThrow(() -> new Exception("해당 쿠폰을 사용할 수 없습니다."))
+        return coupon.orElseThrow(() -> new Exception("해당 쿠폰을 사용할 수 없습니다."));
     }
 
 }
