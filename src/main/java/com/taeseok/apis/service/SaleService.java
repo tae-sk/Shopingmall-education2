@@ -18,6 +18,7 @@ public class SaleService {
     private final SaleRepository saleRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final CouponRepository couponRepository;
 
     @Autowired
     public SaleService(SaleRepository saleRepository,
@@ -31,10 +32,23 @@ public class SaleService {
         Optional<Sale> searchedSale = this.saleRepository.findById(saleId);
         return searchedSale.orElseThrow(() -> new Exception("해당 상품을 찾지 못했습니다"));
     }
+    private int getDiscountAmount(int originAmount, int discountAmount, int discountPercentage){
 
+        if(discountAmount != 0){
+            return discountAmount;
+        }
+        else if(discountPercentage != 0){
+            //10000 * 0.01 = 100
+            return (int)Math.floor(originAmount * (discountPercentage / 100));
+        }
+        return 0;
+
+    }
     public int createSale(SalePurchaseVO salePurchaseVO) throws  Exception {
         Optional<Product> product = this.productRepository.findById(salePurchaseVO.getProductId()) ;
         Optional<User> user = this.userRepository.findById(salePurchaseVO.getUserId());
+
+        int discount_amount=
 
         Product findedProduct = product.orElseThrow(() -> new Exception("해당 상품 ID가 존재하지 않습니다."));
         user.orElseThrow(() -> new Exception("해당 유저 ID가 존재하지 않습니다."));
