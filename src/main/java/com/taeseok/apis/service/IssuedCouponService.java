@@ -31,7 +31,7 @@ public class IssuedCouponService {
         Coupon coupon = SearchedCoupon.orElseThrow(() -> new Exception("해당 쿠폰을 찾지 못하였습니다."));
 
         Date expireDate = null;
-        Date addedDate = DateUtil.addDugs(new Date(), coupon.getAvailableDays());
+        Date addedDate = DateUtil.addDays(new Date(), coupon.getAvailableDays());
 
         int compareDate = addedDate.compareTo(coupon.getExpireAt());
         if(compareDate == 1){
