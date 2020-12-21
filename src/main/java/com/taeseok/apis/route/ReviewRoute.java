@@ -19,7 +19,7 @@ public class ReviewRoute {
     }
 
     @GetMapping("/initialize")
-    public void initializeReviews(){
+    public void initializeReviews() {
         this.reviewService.initializeReviews();
     }
 }

@@ -1,4 +1,4 @@
-package com.taeseok.apis.vo;
+package com.taeseok.apis.datamodels.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

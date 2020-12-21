@@ -1,9 +1,10 @@
 package com.taeseok.apis.service;
 
 
+import com.taeseok.apis.datamodels.dto.CouponDTO;
 import com.taeseok.apis.model.Coupon;
 import com.taeseok.apis.repository.CouponRepository;
-import com.taeseok.apis.vo.CouponRegisterVO;
+import com.taeseok.apis.datamodels.vo.CouponRegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -38,9 +39,9 @@ public class CouponService {
         return createdCoupon.getCouponId();
     }
 
-    public Coupon couponById(int couponId) throws Exception {
+    public CouponDTO couponById(int couponId) throws Exception {
         Optional<Coupon> coupon = this.couponRepository.findById(couponId);
 
-        return coupon.orElseThrow(() -> new Exception("해당 쿠폰을 확인할수 없습니다"));
+        return new CouponDTO(coupon.orElseThrow(() -> new Exception("해당 쿠폰을 확인할수 없습니다")));
     }
 }

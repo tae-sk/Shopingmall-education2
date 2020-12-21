@@ -1,17 +1,19 @@
 package com.taeseok.apis.service;
 
 import com.taeseok.apis.datamodels.SaleGroupByUserId;
-import com.taeseok.apis.datamodels.UserGradeEnum;
+import com.taeseok.apis.datamodels.dto.UserDTO;
+import com.taeseok.apis.datamodels.enumModel.UserGradeEnum;
 import com.taeseok.apis.datamodels.UserTotalPaidPrice;
 import com.taeseok.apis.model.User;
 import com.taeseok.apis.repository.SaleRepository;
-import com.taeseok.apis.vo.UserRegisterVO;
+import com.taeseok.apis.datamodels.vo.UserRegisterVO;
 import com.taeseok.apis.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserService {
@@ -24,13 +26,15 @@ public class UserService {
         this.saleRepository = saleRepository;
     }
 
-    public User find(int userId) throws Exception{
+    public UserDTO userById(int userId) throws Exception {
         Optional<User> searchedUser = this.userRepository.findById(userId);
-        return searchedUser.orElseThrow(() -> new Exception("해당 유저를 찾지 못하였습니다"));
+        return new UserDTO(searchedUser.orElseThrow(() -> new Exception("해당 유저를 찾지 못하였습니다.")));
     }
 
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public List<UserDTO> users() {
+        return this.userRepository.findAll().stream()
+                .map(UserDTO::new)
+                .collect(Collectors.toList());
     }
 
     public void initializeUsers() {
@@ -43,13 +47,13 @@ public class UserService {
         User user2 = User.builder()
                 .email("example2@sample.com")
                 .name("Mrs. Sample")
-                .phone("01000001234")
+                .phone("01000000000")
                 .build();
 
         User user3 = User.builder()
                 .email("example3@sample.com")
                 .name("ms. Sample Data")
-                .phone("01012341234")
+                .phone("01000000000")
                 .build();
 
         this.userRepository.save(user1);
@@ -78,11 +82,25 @@ public class UserService {
     public UserGradeEnum getUserGrade(int userId) {
         SaleGroupByUserId groupData = this.saleRepository.PurchaseAmountGroupByUserId(userId);
         UserTotalPaidPrice userTotalPaidPrice = new UserTotalPaidPrice(groupData);
-        return this.getUserGradeByTotalPaidPrice(userTotalPaidPrice.getTotalPaidPrice());
 
+        if (userTotalPaidPrice.getTotalPaidPrice() < 100000) {
+            return UserGradeEnum.FirstGrade;
+        }
+        else if (userTotalPaidPrice.getTotalPaidPrice() < 1000000) {
+            return UserGradeEnum.SecondGrade;
+        }
+        else if (userTotalPaidPrice.getTotalPaidPrice() < 3000000) {
+            return UserGradeEnum.ThirdGrade;
+        }
+        else if (userTotalPaidPrice.getTotalPaidPrice() < 10000000) {
+            return UserGradeEnum.FourthGrade;
+        }
+        else {
+            return UserGradeEnum.TopTier;
+        }
     }
-        public UserGradeEnum getUserGradeByTotalPaidPrice(int totalPaidPrice){
 
+    public UserGradeEnum getUserGradeByTotalPaidPrice(int totalPaidPrice) {
         if (totalPaidPrice < 100000) {
             return UserGradeEnum.FirstGrade;
         }

@@ -1,4 +1,4 @@
-package com.taeseok.apis.datamodels;
+package com.taeseok.apis.datamodels.enumModel;
 
 public enum SaleStatusEnum {
         NON_PAID,

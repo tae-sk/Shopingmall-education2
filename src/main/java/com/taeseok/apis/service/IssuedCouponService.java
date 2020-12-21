@@ -1,5 +1,6 @@
 package com.taeseok.apis.service;
 
+import com.taeseok.apis.datamodels.dto.IssuedCouponDTO;
 import com.taeseok.apis.model.Coupon;
 import com.taeseok.apis.model.IssuedCoupon;
 import com.taeseok.apis.repository.CouponRepository;
@@ -22,9 +23,9 @@ public class IssuedCouponService {
         this.couponRepository = couponRepository;
     }
 
-    public IssuedCoupon issueCouponById(int issueCouponId) throws Exception {
-        return this.issuedCouponRepository.findById(issueCouponId)
-                .orElseThrow(() -> new Exception("해당 발급된 쿠폰 ID가 없습니다"));
+    public IssuedCouponDTO issueCouponById(int issueCouponId) throws Exception {
+        return new IssuedCouponDTO(this.issuedCouponRepository.findById(issueCouponId)
+                .orElseThrow(() -> new Exception("해당 발급된 쿠폰 ID가 없습니다")));
     }
 
     public int issueCoupon(int couponId, int userId) throws Exception {

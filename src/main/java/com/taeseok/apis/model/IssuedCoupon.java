@@ -3,6 +3,7 @@ package com.taeseok.apis.model;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,6 +26,8 @@ public class IssuedCoupon {
     Date expiredAt;
 
     @Column
+    @Setter
+    @Getter
     boolean used = false;
 
     @Builder

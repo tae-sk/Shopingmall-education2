@@ -1,38 +1,41 @@
 package com.taeseok.apis.route;
 
+import com.taeseok.apis.datamodels.dto.ProductDTO;
+import com.taeseok.apis.datamodels.vo.ProductRegisterVO;
+import com.taeseok.apis.model.Product;
 import com.taeseok.apis.service.ProductService;
 import com.taeseok.apis.service.ReviewService;
 import com.taeseok.apis.service.SaleService;
 import com.taeseok.apis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/initialize")
 public class InitializeRoute {
-    private final ProductService productService;
-    private final ReviewService reviewService;
-    private final SaleService saleService;
     private final UserService userService;
+    private final ProductService productService;
+    private final SaleService saleService;
+    private final ReviewService reviewService;
 
     @Autowired
-    public InitializeRoute(ProductService productService,
-                           ReviewService reviewService,
+    public InitializeRoute(UserService userService,
+                           ProductService productService,
                            SaleService saleService,
-                           UserService userService) {
-        this.productService = productService;
-        this.reviewService = reviewService;
-        this.saleService = saleService;
+                           ReviewService reviewService) {
         this.userService = userService;
+        this.productService = productService;
+        this.saleService = saleService;
+        this.reviewService = reviewService;
     }
 
-    @GetMapping("/initialize")
+    @GetMapping("")
     public void initialize() {
-        this.productService.initializeProducts();
         this.userService.initializeUsers();
-        this.reviewService.initializeReviews();
+        this.productService.initializeProducts();
         this.saleService.initializeSales();
+        this.reviewService.initializeReviews();
     }
 }
