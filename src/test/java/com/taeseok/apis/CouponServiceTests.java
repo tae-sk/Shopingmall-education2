@@ -10,11 +10,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class CouponServiceTests {
     private final CouponService couponService;
     private final CouponRepository couponRepository;
+
+    public CouponServiceTests(){
+        this.couponRepository = mock(CouponRepository.class);
+        this.couponService = new CouponService()
+    }
 
     @Autowired
     public CouponServiceTests(CouponRepository couponRepository){
